@@ -1,0 +1,380 @@
+[
+  {
+    "id": "io.gerege.nexus.organisation",
+    "slug": "organisation",
+    "name": "Organisation",
+    "description": "The organisation itself: its legal identity, its departments, and the people who work in it.",
+    "icon_url": "/icons/organisation.png",
+    "category": "Platform",
+    "visibility": "public",
+    "version": "3.0.0",
+    "translations": {
+      "mn": {
+        "name": "Байгууллага",
+        "description": "Байгууллагын хуулийн мэдээлэл, хэлтэс нэгж, ажилтнуудын бүртгэл.",
+        "category": "Платформ"
+      },
+      "ar": {
+        "name": "المؤسسة",
+        "description": "الهوية القانونية للمؤسسة وأقسامها والعاملون فيها.",
+        "category": "المنصة"
+      },
+      "zh": {
+        "name": "组织",
+        "description": "组织的法律信息、部门结构与人员名录。",
+        "category": "平台"
+      },
+      "fr": {
+        "name": "Organisation",
+        "description": "L'identité légale de l'organisation, ses départements et les personnes qui y travaillent.",
+        "category": "Plateforme"
+      },
+      "ru": {
+        "name": "Организация",
+        "description": "Юридические данные организации, её подразделения и сотрудники.",
+        "category": "Платформа"
+      },
+      "es": {
+        "name": "Organización",
+        "description": "La identidad legal de la organización, sus departamentos y las personas que trabajan en ella.",
+        "category": "Plataforma"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.egov",
+    "slug": "egov",
+    "name": "e-Government Link",
+    "description": "This organisation's connection to the state's systems: registry lookups through XYP, the eID and ДАН rails, and a record of what was asked.",
+    "icon_url": "/icons/egov.png",
+    "category": "Platform",
+    "visibility": "public",
+    "version": "1.0.0",
+    "translations": {
+      "mn": {
+        "name": "Цахим засгийн холболт",
+        "description": "Байгууллагын төрийн системтэй холбогдох цэг: ХУР-ын лавлагаа, eID ба ДАН суваг, лавлагааны түүх.",
+        "category": "Платформ"
+      },
+      "ar": {
+        "name": "الربط بالحكومة الإلكترونية",
+        "description": "صلة هذه المؤسسة بأنظمة الدولة: استعلامات السجل عبر ХУР، وقناتا eID و ДАН، وسجل بما تم الاستعلام عنه.",
+        "category": "المنصة"
+      },
+      "zh": {
+        "name": "电子政务连接",
+        "description": "本组织与国家系统的连接：通过 ХУР 的登记查询、eID 与 ДАН 通道，以及查询记录。",
+        "category": "平台"
+      },
+      "fr": {
+        "name": "Liaison e-gouvernement",
+        "description": "Le lien de cette organisation avec les systèmes de l'État : consultations du registre via ХУР, canaux eID et ДАН, et l'historique des demandes.",
+        "category": "Plateforme"
+      },
+      "ru": {
+        "name": "Подключение к электронному правительству",
+        "description": "Связь организации с государственными системами: справки из реестра через ХУР, каналы eID и ДАН, история запросов.",
+        "category": "Платформа"
+      },
+      "es": {
+        "name": "Enlace con la administración electrónica",
+        "description": "La conexión de esta organización con los sistemas del Estado: consultas al registro vía ХУР, canales eID y ДАН, e historial de consultas.",
+        "category": "Plataforma"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.documents",
+    "slug": "documents",
+    "name": "Documents",
+    "description": "One register for what an organisation writes down and what it signs: templates, approval chains, retention, and PDF signing over the eID and HSM rails.",
+    "icon_url": "/icons/documents.png",
+    "category": "Productivity",
+    "visibility": "public",
+    "version": "2.0.0",
+    "translations": {
+      "mn": {
+        "name": "Баримт бичиг",
+        "description": "Байгууллагын баримтын бүртгэл, загвар, батламжийн урсгал, хадгалалт — PDF болон бүртгэлийн тоон гарын үсэг eID, ДАН, HSM гурван сувгаар.",
+        "category": "Бүтээмж"
+      },
+      "ar": {
+        "name": "المستندات",
+        "description": "سجل واحد لما تكتبه المؤسسة وما توقّعه: القوالب وسلاسل الموافقة والاحتفاظ وتوقيع PDF عبر مساري eID و HSM.",
+        "category": "الإنتاجية"
+      },
+      "zh": {
+        "name": "文档",
+        "description": "一个登记册，涵盖组织所记录与所签署的一切：模板、审批链、保留策略，以及通过 eID 与 HSM 通道的 PDF 签名。",
+        "category": "生产力"
+      },
+      "fr": {
+        "name": "Documents",
+        "description": "Un seul registre pour ce qu'une organisation consigne et ce qu'elle signe : modèles, circuits d'approbation, conservation et signature PDF via les canaux eID et HSM.",
+        "category": "Productivité"
+      },
+      "ru": {
+        "name": "Документы",
+        "description": "Единый реестр того, что организация фиксирует и подписывает: шаблоны, цепочки согласования, хранение и подпись PDF по каналам eID и HSM.",
+        "category": "Продуктивность"
+      },
+      "es": {
+        "name": "Documentos",
+        "description": "Un único registro de lo que una organización deja por escrito y de lo que firma: plantillas, cadenas de aprobación, conservación y firma de PDF por los canales eID y HSM.",
+        "category": "Productividad"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.sso_clients",
+    "slug": "sso-clients",
+    "name": "SSO Clients",
+    "description": "Register the systems that sign people in through this platform: OAuth2 / OpenID Connect clients and their credentials.",
+    "icon_url": "/icons/sso-clients.png",
+    "category": "Platform",
+    "visibility": "public",
+    "version": "2.0.0",
+    "translations": {
+      "mn": {
+        "name": "SSO клиентүүд",
+        "description": "Энэ платформоор дамжуулан хэрэглэгч нэвтрүүлэх системүүдийг бүртгэх: OAuth2 / OpenID Connect клиент ба тэдгээрийн эрхийн мэдээлэл.",
+        "category": "Платформ"
+      },
+      "ar": {
+        "name": "عملاء SSO",
+        "description": "سجّل الأنظمة التي تُسجّل دخول المستخدمين عبر هذه المنصة: عملاء OAuth2 / OpenID Connect وبيانات اعتمادهم.",
+        "category": "المنصة"
+      },
+      "zh": {
+        "name": "SSO 客户端",
+        "description": "注册通过本平台登录用户的系统：OAuth2 / OpenID Connect 客户端及其凭据。",
+        "category": "平台"
+      },
+      "fr": {
+        "name": "Clients SSO",
+        "description": "Enregistrez les systèmes qui connectent des personnes via cette plateforme : clients OAuth2 / OpenID Connect et leurs identifiants.",
+        "category": "Plateforme"
+      },
+      "ru": {
+        "name": "SSO-клиенты",
+        "description": "Регистрация систем, которые выполняют вход пользователей через эту платформу: клиенты OAuth2 / OpenID Connect и их учётные данные.",
+        "category": "Платформа"
+      },
+      "es": {
+        "name": "Clientes SSO",
+        "description": "Registre los sistemas que inician sesión de personas a través de esta plataforma: clientes OAuth2 / OpenID Connect y sus credenciales.",
+        "category": "Plataforma"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.reports",
+    "slug": "reports",
+    "name": "Reports",
+    "description": "Business reports for every app this organisation has installed: run them on screen, chart them, export to Excel or CSV, and have them mailed out on a schedule.",
+    "icon_url": "/icons/reports.png",
+    "category": "Productivity",
+    "visibility": "public",
+    "version": "1.0.0",
+    "translations": {
+      "mn": {
+        "name": "Тайлан",
+        "description": "Байгууллагын суулгасан апп бүрийн бизнес тайлан: дэлгэц дээр ажиллуулах, график харах, Excel эсвэл CSV болгон гаргах, товлосон хугацаанд и-мэйлээр илгээх.",
+        "category": "Бүтээмж"
+      },
+      "ar": {
+        "name": "التقارير",
+        "description": "تقارير الأعمال لكل تطبيق ثبّتته المؤسسة: شغّلها على الشاشة، واعرضها كرسوم بيانية، وصدّرها إلى Excel أو CSV، وأرسلها بالبريد وفق جدول زمني.",
+        "category": "الإنتاجية"
+      },
+      "zh": {
+        "name": "报表",
+        "description": "为本组织已安装的每个应用提供业务报表：在线运行、图表展示、导出 Excel 或 CSV，并可按计划邮件发送。",
+        "category": "生产力"
+      },
+      "fr": {
+        "name": "Rapports",
+        "description": "Rapports d'activité pour chaque application installée : exécution à l'écran, graphiques, export Excel ou CSV, et envoi par courriel selon un calendrier.",
+        "category": "Productivité"
+      },
+      "ru": {
+        "name": "Отчёты",
+        "description": "Бизнес-отчёты по каждому установленному приложению: просмотр на экране, графики, экспорт в Excel или CSV и отправка по расписанию.",
+        "category": "Продуктивность"
+      },
+      "es": {
+        "name": "Informes",
+        "description": "Informes de negocio para cada aplicación instalada: ejecución en pantalla, gráficos, exportación a Excel o CSV y envío programado por correo.",
+        "category": "Productividad"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.contacts",
+    "slug": "contacts",
+    "name": "Contacts",
+    "description": "Manage business contacts, customers, and vendors.",
+    "icon_url": "/icons/contacts.png",
+    "category": "CRM",
+    "visibility": "public",
+    "version": "2.0.0",
+    "translations": {
+      "mn": {
+        "name": "Харилцагчид",
+        "description": "Байгууллагын харилцагч, үйлчлүүлэгч, нийлүүлэгчдийн бүртгэл.",
+        "category": "Харилцагчийн удирдлага"
+      },
+      "ar": {
+        "name": "جهات الاتصال",
+        "description": "إدارة جهات الاتصال التجارية والعملاء والموردين.",
+        "category": "إدارة العلاقات"
+      },
+      "zh": {
+        "name": "联系人",
+        "description": "管理业务联系人、客户与供应商。",
+        "category": "客户关系管理"
+      },
+      "fr": {
+        "name": "Contacts",
+        "description": "Gérez les contacts professionnels, les clients et les fournisseurs.",
+        "category": "Gestion de la relation client"
+      },
+      "ru": {
+        "name": "Контакты",
+        "description": "Управление деловыми контактами, клиентами и поставщиками.",
+        "category": "Управление отношениями"
+      },
+      "es": {
+        "name": "Contactos",
+        "description": "Gestione contactos comerciales, clientes y proveedores.",
+        "category": "Gestión de clientes"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.products",
+    "slug": "products",
+    "name": "Products",
+    "description": "Product catalog management, pricing, and SKUs.",
+    "icon_url": "/icons/products.png",
+    "category": "Sales",
+    "visibility": "public",
+    "version": "1.0.0",
+    "translations": {
+      "mn": {
+        "name": "Бараа бүтээгдэхүүн",
+        "description": "Барааны каталог, үнэ ба тенантад хамаарах SKU удирдлага.",
+        "category": "Борлуулалт"
+      },
+      "ar": {
+        "name": "المنتجات",
+        "description": "إدارة كتالوج المنتجات والتسعير وأكواد SKU.",
+        "category": "المبيعات"
+      },
+      "zh": {
+        "name": "产品",
+        "description": "产品目录管理、定价与 SKU。",
+        "category": "销售"
+      },
+      "fr": {
+        "name": "Produits",
+        "description": "Gestion du catalogue produits, des prix et des SKU.",
+        "category": "Ventes"
+      },
+      "ru": {
+        "name": "Товары",
+        "description": "Управление каталогом товаров, ценами и SKU.",
+        "category": "Продажи"
+      },
+      "es": {
+        "name": "Productos",
+        "description": "Gestión del catálogo de productos, precios y SKU.",
+        "category": "Ventas"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.inventory",
+    "slug": "inventory",
+    "name": "Inventory",
+    "description": "Warehouse management, stock tracking, and adjustments.",
+    "icon_url": "/icons/inventory.png",
+    "category": "Supply Chain",
+    "visibility": "public",
+    "version": "1.0.0",
+    "translations": {
+      "mn": {
+        "name": "Агуулах",
+        "description": "Агуулахын удирдлага, үлдэгдлийн хяналт ба тохируулга.",
+        "category": "Нийлүүлэлтийн сүлжээ"
+      },
+      "ar": {
+        "name": "المخزون",
+        "description": "إدارة المستودعات وتتبع المخزون والتسويات.",
+        "category": "سلسلة التوريد"
+      },
+      "zh": {
+        "name": "库存",
+        "description": "仓库管理、库存跟踪与调整。",
+        "category": "供应链"
+      },
+      "fr": {
+        "name": "Inventaire",
+        "description": "Gestion des entrepôts, suivi des stocks et ajustements.",
+        "category": "Chaîne d'approvisionnement"
+      },
+      "ru": {
+        "name": "Склад",
+        "description": "Управление складами, учёт запасов и корректировки.",
+        "category": "Цепочка поставок"
+      },
+      "es": {
+        "name": "Inventario",
+        "description": "Gestión de almacenes, seguimiento de stock y ajustes.",
+        "category": "Cadena de suministro"
+      }
+    }
+  },
+  {
+    "id": "io.gerege.nexus.billing",
+    "slug": "billing",
+    "name": "Public Billing & e-Barimt",
+    "description": "State fee invoicing, public service payments, and e-Barimt tax receipts.",
+    "icon_url": "/icons/billing.png",
+    "category": "Finance",
+    "visibility": "public",
+    "version": "1.0.0",
+    "translations": {
+      "mn": {
+        "name": "Нэхэмжлэх ба e-Barimt",
+        "description": "Улсын хураамжийн нэхэмжлэх, төлбөр ба e-Barimt татварын баримт.",
+        "category": "Санхүү"
+      },
+      "ar": {
+        "name": "الفوترة العامة و e-Barimt",
+        "description": "فوترة الرسوم الحكومية ومدفوعات الخدمات العامة وإيصالات ضريبة e-Barimt.",
+        "category": "المالية"
+      },
+      "zh": {
+        "name": "公共计费与 e-Barimt",
+        "description": "国家规费开票、公共服务付款与 e-Barimt 税务收据。",
+        "category": "财务"
+      },
+      "fr": {
+        "name": "Facturation publique et e-Barimt",
+        "description": "Facturation des frais d'État, paiements de services publics et reçus fiscaux e-Barimt.",
+        "category": "Finance"
+      },
+      "ru": {
+        "name": "Публичные счета и e-Barimt",
+        "description": "Выставление счетов по государственным сборам, платежи за услуги и налоговые чеки e-Barimt.",
+        "category": "Финансы"
+      },
+      "es": {
+        "name": "Facturación pública y e-Barimt",
+        "description": "Facturación de tasas estatales, pagos de servicios públicos y recibos fiscales e-Barimt.",
+        "category": "Finanzas"
+      }
+    }
+  }
+]

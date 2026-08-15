@@ -1,0 +1,151 @@
+# Commerce, as a Gerege Nexus distribution.
+#
+# What makes this instance a commerce platform is not a special build of the
+# core: it is this product's own binary — the same platform plus four modules —
+# pointed at this product's catalogue. Every other deployment runs the platform
+# without those four and cannot install them at all.
+#
+# It shares a host with the App Store today. That is a fact about the machine
+# and about nothing else: separate database, separate volume, separate ports,
+# separate nginx server block. Two products on one box is a hosting decision;
+# two products in one database would be an architectural one, and it is not
+# being made here.
+#
+# Required environment (deploy/.env):
+#   COMMERCE_NEXUS_POSTGRES_PASSWORD  this stack's own database
+#   SSO_DEFAULT_CLIENT_SECRET         the platform refuses to start without it
+#                                     in production — see config.ValidateProduction
+#   PUBLIC_ORIGIN                     where this instance answers
+
+name: commerce-nexus
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gerege_commerce_nexus_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: platform_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${COMMERCE_NEXUS_POSTGRES_PASSWORD:?COMMERCE_NEXUS_POSTGRES_PASSWORD is required}
+    # A port of its own: the App Store's postgres already holds 5436 on this
+    # host, and the two must not be able to reach each other's data by accident.
+    ports:
+      - "127.0.0.1:5437:5432"
+    volumes:
+      - gerege_commerce_nexus_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d platform_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: ${IMAGE:-commerce-nexus:latest}
+    container_name: gerege_commerce_nexus_migrate
+    # The platform's migrations, from the core version this product's go.mod
+    # pins — the image carries both, so they cannot drift apart.
+    command: ["/app/migrate", "up"]
+    environment:
+      DATABASE_URL: postgres://postgres:${COMMERCE_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  # This product's own migrations, in their own history.
+  #
+  # Two histories in one database, which is why MIGRATIONS_TABLE is not optional
+  # here: goose keeps one row per applied version in one table, so the
+  # platform's 00001 and this product's 00001 would be the same row and
+  # whichever ran second would be recorded as already applied.
+  migrate-commerce:
+    image: ${IMAGE:-commerce-nexus:latest}
+    container_name: gerege_commerce_nexus_migrate_own
+    command: ["/app/migrate", "up"]
+    environment:
+      DATABASE_URL: postgres://postgres:${COMMERCE_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
+      MIGRATIONS_DIR: /app/db/commerce
+      MIGRATIONS_TABLE: goose_db_version_commerce
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: "no"
+
+  backend:
+    image: ${IMAGE:-commerce-nexus:latest}
+    container_name: gerege_commerce_nexus_backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://postgres:${COMMERCE_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
+      ENVIRONMENT: production
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-https://commerce.gerege.mn}
+      ALLOWED_ORIGINS: ${PUBLIC_ORIGIN:-https://commerce.gerege.mn}
+      # nginx terminates TLS in front of this, so the forwarded client address
+      # can be trusted — and the login rate limiter counts on it being real.
+      TRUST_PROXY_HEADERS: "true"
+
+      # This product's own catalogue, shipped in the image.
+      APP_CATALOG_PATH: /app/catalog/apps.json
+      # File mode. The App Store's catalogue does not carry these four apps
+      # yet — publishing them there is a deliberate act with a review queue in
+      # front of it — and an instance that pulled a catalogue without them would
+      # stop offering its own product. See docs/ECOSYSTEM_GIT_STRATEGY.md §3.
+      APP_CATALOG_URL: ""
+
+      # Its own issuer: SelfOrigin falls back to PUBLIC_ORIGIN, so every OAuth
+      # callback this instance mints points at itself. Nothing in the field is
+      # registered against it yet, which is exactly why it can be its own —
+      # unlike the App Store, which inherited nexus.gerege.mn's clients.
+      SSO_DEFAULT_CLIENT_SECRET: ${SSO_DEFAULT_CLIENT_SECRET:?SSO_DEFAULT_CLIENT_SECRET is required}
+
+      # No demo data in production. The seeded account has a published password.
+      SEED_DEMO_DATA: "false"
+      DEMO_MODE: "false"
+    ports:
+      - "127.0.0.1:8088:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      migrate-commerce:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # The platform's own shell, unmodified.
+  #
+  # A distribution does not fork the frontend: the sidebar and every module
+  # screen are catalogue-driven, so the generic shell already renders this
+  # product — `app/module/{products,inventory,billing}` and `app/pos/` are in it
+  # and come alive the moment these modules are installed.
+  web:
+    image: ${WEB_IMAGE:-commerce-nexus-web:latest}
+    container_name: gerege_commerce_nexus_web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      # Where the shell asks, server-side, what this deployment is. The browser
+      # never uses it: it asks its own origin (lib/apiBase.ts). A server has no
+      # origin, which is the whole reason this exists.
+      API_INTERNAL_URL: http://backend:8080/api/v1
+      # What this deployment calls itself. Read per request — see
+      # frontend/lib/brand.ts — so it is a setting rather than a build.
+      BRAND_NAME: ${BRAND_NAME:-}
+      BRAND_SHORT_NAME: ${BRAND_SHORT_NAME:-}
+      BRAND_DESCRIPTION: ${BRAND_DESCRIPTION:-}
+      BRAND_LOGO_URL: ${BRAND_LOGO_URL:-}
+      BRAND_THEME_COLOR: ${BRAND_THEME_COLOR:-}
+    ports:
+      - "127.0.0.1:3016:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  gerege_commerce_nexus_postgres_data:
