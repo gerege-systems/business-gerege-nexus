@@ -13,6 +13,9 @@
 package main
 
 import (
+	"log/slog"
+	"os"
+
 	"github.com/gerege-systems/open-gerege-nexus/backend/pkg/nexus"
 	"github.com/gerege-systems/open-gerege-nexus/backend/pkg/platform"
 
@@ -23,7 +26,12 @@ import (
 )
 
 func main() {
-	platform.Run(platform.Options{
+	// The error is checked, and the exit code is the point: a distribution that
+	// cannot start — a catalogue that disagrees with its modules, a database it
+	// cannot reach — must not exit 0 and read as a clean shutdown to whatever is
+	// supervising it. The App Store's main.go has done this since it was
+	// written; this one dropped the value.
+	err := platform.Run(platform.Options{
 		Modules: func(p nexus.Platform) {
 			// products first: inventory's stock rows reference it, and the
 			// dependency between the modules is declared rather than implied
@@ -44,4 +52,8 @@ func main() {
 			billing.New(p)
 		},
 	})
+	if err != nil {
+		slog.Error("commerce stopped", "error", err)
+		os.Exit(1)
+	}
 }
