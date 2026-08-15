@@ -1,0 +1,18 @@
+name: CI
+
+# The steps are the core's, called rather than copied. This is where a new
+# platform release stops being a rumour: Dependabot moves one line in go.mod
+# and this answers whether Commerce still works on it.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: gerege-systems/open-gerege-nexus/.github/workflows/distribution-ci.yml@main
