@@ -6,6 +6,7 @@ import (
 	"github.com/gerege-systems/open-gerege-nexus/backend/pkg/nexus"
 
 	"github.com/gerege-systems/commerce-gerege-nexus/modules/billing"
+	"github.com/gerege-systems/commerce-gerege-nexus/modules/contacts"
 	"github.com/gerege-systems/commerce-gerege-nexus/modules/inventory"
 	"github.com/gerege-systems/commerce-gerege-nexus/modules/products"
 )
@@ -29,6 +30,12 @@ func TestEachModuleStillDeclaresItsAccessPolicy(t *testing.T) {
 		module       nexus.Module
 		menu, prefix string
 	}{
+		// contacts arrived from the platform after the other three, and it
+		// arrived twice: as its own app, then absorbed into the directory, then
+		// out again to here. Its policy is the one it always had — and it is
+		// the one most worth asserting, because a register of customers is the
+		// personal data in this product.
+		{"contacts", (*contacts.Module)(nil), "contacts.read", "contacts"},
 		{"products", (*products.Module)(nil), "products.read", "products"},
 		{"inventory", (*inventory.Module)(nil), "inventory.read", "inventory"},
 		{"billing", (*billing.BillingModule)(nil), "billing.read", "billing"},
@@ -50,6 +57,7 @@ func TestEachModuleStillDeclaresItsAccessPolicy(t *testing.T) {
 // database remembers.
 func TestTheModuleIdsSurvivedTheMove(t *testing.T) {
 	for want, mod := range map[string]nexus.Module{
+		"io.gerege.nexus.contacts":  (*contacts.Module)(nil),
 		"io.gerege.nexus.products":  (*products.Module)(nil),
 		"io.gerege.nexus.inventory": (*inventory.Module)(nil),
 		"io.gerege.nexus.billing":   (*billing.BillingModule)(nil),

@@ -1,0 +1,63 @@
+{
+  "id": "io.gerege.nexus.contacts",
+  "name": "Contacts",
+  "version": "2.0.0",
+  "platform": ">=0.1.0 <2.0.0",
+  "publisher": "gerege",
+  "authors": [
+    {
+      "name": "Gerege Systems Development Team"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Gerege Systems Development Team"
+    }
+  ],
+  "repository": "https://github.com/gerege-systems/commerce-gerege-nexus",
+  "homepage": "https://nexus.gerege.mn",
+  "license": "Apache-2.0",
+  "dependencies": [],
+  "permissions": [
+    {
+      "code": "contacts.read",
+      "name": "Read Contacts",
+      "description": "Allows viewing the contact register"
+    },
+    {
+      "code": "contacts.manage",
+      "name": "Manage Contacts",
+      "description": "Allows creating and editing contacts, segments and imports"
+    }
+  ],
+  "menus": [
+    {
+      "id": "contacts",
+      "label": "Contacts",
+      "path": "/contacts",
+      "icon": "users",
+      "order": 10
+    },
+    {
+      "id": "contacts_segments",
+      "label": "Segments",
+      "path": "/module/contacts/segments",
+      "icon": "users",
+      "order": 20
+    },
+    {
+      "id": "contacts_duplicates",
+      "label": "Duplicates",
+      "path": "/module/contacts/duplicates",
+      "icon": "copy",
+      "order": 30
+    },
+    {
+      "id": "contacts_import",
+      "label": "Import contacts",
+      "path": "/module/contacts/import",
+      "icon": "upload",
+      "order": 40
+    }
+  ]
+}

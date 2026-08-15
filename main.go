@@ -17,6 +17,7 @@ import (
 	"github.com/gerege-systems/open-gerege-nexus/backend/pkg/platform"
 
 	"github.com/gerege-systems/commerce-gerege-nexus/modules/billing"
+	"github.com/gerege-systems/commerce-gerege-nexus/modules/contacts"
 	"github.com/gerege-systems/commerce-gerege-nexus/modules/inventory"
 	"github.com/gerege-systems/commerce-gerege-nexus/modules/products"
 )
@@ -28,6 +29,11 @@ func main() {
 			// dependency between the modules is declared rather than implied
 			// by this order — but constructing it first keeps the reading
 			// order and the dependency order the same.
+			// Who this business sells to and buys from. It was the
+			// platform's until the platform stopped pretending everybody has
+			// customers: departments and staff are universal, a contact
+			// register is what a business keeps.
+			contacts.New(p)
 			products.New(p)
 			// false: stock may not go negative. It is the platform's own
 			// setting today, carried over unchanged rather than quietly
