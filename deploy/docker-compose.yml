@@ -1,4 +1,4 @@
-# Commerce, as a Gerege Nexus distribution.
+# Gerege Business, as a Gerege Nexus distribution.
 #
 # What makes this instance a commerce platform is not a special build of the
 # core: it is this product's own binary — the same platform plus four modules —
@@ -12,28 +12,33 @@
 # being made here.
 #
 # Required environment (deploy/.env):
-#   COMMERCE_NEXUS_POSTGRES_PASSWORD  this stack's own database
+#   BUSINESS_NEXUS_POSTGRES_PASSWORD  this stack's own database
 #   SSO_DEFAULT_CLIENT_SECRET         the platform refuses to start without it
 #                                     in production — see config.ValidateProduction
 #   PUBLIC_ORIGIN                     where this instance answers
 
-name: commerce-nexus
+# The project name is fixed here rather than taken from the directory, and it
+# changed with the product: this stack came up as `commerce-nexus` and the
+# volume below still carries that name, which is why the volume is pinned
+# externally rather than declared. A renamed project with an unpinned volume is
+# a new empty database and a deployment that looks like it lost everything.
+name: business-nexus
 
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: gerege_commerce_nexus_postgres
+    container_name: gerege_business_nexus_postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: platform_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${COMMERCE_NEXUS_POSTGRES_PASSWORD:?COMMERCE_NEXUS_POSTGRES_PASSWORD is required}
+      POSTGRES_PASSWORD: ${BUSINESS_NEXUS_POSTGRES_PASSWORD:?BUSINESS_NEXUS_POSTGRES_PASSWORD is required}
     # A port of its own: the App Store's postgres already holds 5436 on this
     # host, and the two must not be able to reach each other's data by accident.
     ports:
       - "127.0.0.1:5437:5432"
     volumes:
-      - gerege_commerce_nexus_postgres_data:/var/lib/postgresql/data
+      - gerege_business_nexus_postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d platform_db"]
       interval: 5s
@@ -41,13 +46,13 @@ services:
       retries: 5
 
   migrate:
-    image: ${IMAGE:-commerce-nexus:latest}
-    container_name: gerege_commerce_nexus_migrate
+    image: ${IMAGE:-business-nexus:latest}
+    container_name: gerege_business_nexus_migrate
     # The platform's migrations, from the core version this product's go.mod
     # pins — the image carries both, so they cannot drift apart.
     command: ["/app/migrate", "up"]
     environment:
-      DATABASE_URL: postgres://postgres:${COMMERCE_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
+      DATABASE_URL: postgres://postgres:${BUSINESS_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
     depends_on:
       postgres:
         condition: service_healthy
@@ -59,13 +64,18 @@ services:
   # here: goose keeps one row per applied version in one table, so the
   # platform's 00001 and this product's 00001 would be the same row and
   # whichever ran second would be recorded as already applied.
-  migrate-commerce:
-    image: ${IMAGE:-commerce-nexus:latest}
-    container_name: gerege_commerce_nexus_migrate_own
+  migrate-business:
+    image: ${IMAGE:-business-nexus:latest}
+    container_name: gerege_business_nexus_migrate_own
     command: ["/app/migrate", "up"]
     environment:
-      DATABASE_URL: postgres://postgres:${COMMERCE_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
-      MIGRATIONS_DIR: /app/db/commerce
+      DATABASE_URL: postgres://postgres:${BUSINESS_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
+      MIGRATIONS_DIR: /app/db/business
+      # Still `..._commerce`. The table is a record of what has already run on
+      # this database, not a label for the product: renaming it would show goose
+      # an empty history and have it apply this product's first migration a
+      # second time. The stack was called commerce when these ran, and that is
+      # what happened.
       MIGRATIONS_TABLE: goose_db_version_commerce
     depends_on:
       migrate:
@@ -73,14 +83,14 @@ services:
     restart: "no"
 
   backend:
-    image: ${IMAGE:-commerce-nexus:latest}
-    container_name: gerege_commerce_nexus_backend
+    image: ${IMAGE:-business-nexus:latest}
+    container_name: gerege_business_nexus_backend
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://postgres:${COMMERCE_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
+      DATABASE_URL: postgres://postgres:${BUSINESS_NEXUS_POSTGRES_PASSWORD}@postgres:5432/platform_db?sslmode=disable
       ENVIRONMENT: production
-      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-https://commerce.gerege.mn}
-      ALLOWED_ORIGINS: ${PUBLIC_ORIGIN:-https://commerce.gerege.mn}
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-https://business.gerege.mn}
+      ALLOWED_ORIGINS: ${PUBLIC_ORIGIN:-https://business.gerege.mn}
       # nginx terminates TLS in front of this, so the forwarded client address
       # can be trusted — and the login rate limiter counts on it being real.
       TRUST_PROXY_HEADERS: "true"
@@ -115,7 +125,7 @@ services:
         condition: service_healthy
       migrate:
         condition: service_completed_successfully
-      migrate-commerce:
+      migrate-business:
         condition: service_completed_successfully
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null 2>&1 || exit 1"]
@@ -131,8 +141,8 @@ services:
   # product — `app/module/{products,inventory,billing}` and `app/pos/` are in it
   # and come alive the moment these modules are installed.
   web:
-    image: ${WEB_IMAGE:-commerce-nexus-web:latest}
-    container_name: gerege_commerce_nexus_web
+    image: ${WEB_IMAGE:-business-nexus-web:latest}
+    container_name: gerege_business_nexus_web
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -159,4 +169,11 @@ services:
         condition: service_healthy
 
 volumes:
-  gerege_commerce_nexus_postgres_data:
+  # Pinned to the physical volume this stack created under its old project
+  # name. Compose derives a volume name from the project, so renaming the
+  # project without this would bring Postgres up on an empty data directory:
+  # healthy container, initdb, migrations, no tenants — a deployment that looks
+  # like it lost everything, because it did.
+  gerege_business_nexus_postgres_data:
+    external: true
+    name: commerce-nexus_gerege_commerce_nexus_postgres_data

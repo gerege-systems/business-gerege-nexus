@@ -1,4 +1,4 @@
-# Commerce's own image.
+# Gerege Business's own image.
 #
 # Two binaries: this product's server — the platform plus its four modules — and
 # the platform's migration runner, built from the exact core version go.mod
@@ -32,7 +32,7 @@ RUN core=$(go list -m -f '{{.Version}}' github.com/gerege-systems/open-gerege-ne
     && echo "building as platform ${version}" \
     && CGO_ENABLED=0 GOOS=linux go build -trimpath \
     -ldflags="-w -s -X github.com/gerege-systems/open-gerege-nexus/backend/internal/platform.PlatformVersion=${version}" \
-    -o /bin/commerce .
+    -o /bin/business .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-w -s" \
     -o /bin/migrate github.com/gerege-systems/open-gerege-nexus/backend/cmd/migrate
@@ -46,23 +46,23 @@ RUN core=$(go list -m -f '{{.Dir}}' github.com/gerege-systems/open-gerege-nexus/
 FROM alpine:3.22
 
 RUN apk add --no-cache ca-certificates tzdata wget \
-    && adduser -D -u 10001 commerce
+    && adduser -D -u 10001 business
 
 WORKDIR /app
 
-COPY --from=build /bin/commerce /app/commerce
+COPY --from=build /bin/business /app/business
 COPY --from=build /bin/migrate  /app/migrate
 COPY --from=build /out/db       /app/db
 # This product's own migrations, which are not the platform's: five tables the
-# commerce split had to re-declare because the originals were tangled into
+# split had to re-declare because the originals were tangled into
 # migrations every deployment had already run. Applied with their own
 # MIGRATIONS_TABLE — see the compose file.
-COPY migrations                 /app/db/commerce
+COPY migrations                 /app/db/business
 # The catalogue this instance offers: the platform's apps as the pinned core
 # ships them, and this product's four beside them.
 COPY catalog                    /app/catalog
 
-USER commerce
+USER business
 EXPOSE 8080
 
-CMD ["/app/commerce"]
+CMD ["/app/business"]

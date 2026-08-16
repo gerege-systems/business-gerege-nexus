@@ -1,4 +1,4 @@
-module github.com/gerege-systems/commerce-gerege-nexus
+module github.com/gerege-systems/business-gerege-nexus
 
 go 1.26
 

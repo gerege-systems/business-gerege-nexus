@@ -1,7 +1,14 @@
-# Gerege Nexus — Commerce
+# Gerege Business
 
-Худалдаа-агуулах-нэхэмжлэхийн distribution: бүтээгдэхүүн, нөөц, нэхэмжлэх ба
-e-Barimt.
+Худалдаа-агуулах-нэхэмжлэхийн distribution: харилцагч, бүтээгдэхүүн, нөөц,
+нэхэмжлэх ба e-Barimt.
+
+Энэ репо `commerce-gerege-nexus` нэртэй байснаа 2026-08-16-нд
+`business-gerege-nexus` болов. Бүтээгдэхүүний нэр нь **Gerege Business**,
+домэйн нь `business.gerege.mn`. Модулиудын ID (`io.gerege.nexus.products` г.м.)
+өөрчлөгдөөгүй — ID бол суулгацын мөр, каталогийн манифест, цэсний түлхүүр
+бүрийн барьдаг зүйл бөгөөд бүтээгдэхүүний нэр солигдсоноос болж өөрчлөгдөх
+ёсгүй.
 
 [Nexus платформ](https://github.com/gerege-systems/open-gerege-nexus)-ыг
 **хамаарал** болгон авдаг — `go.mod`-ын нэг мөр. Цөмийн код энд нэг ч мөр

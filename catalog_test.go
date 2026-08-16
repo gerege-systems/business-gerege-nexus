@@ -7,10 +7,10 @@ import (
 	"github.com/gerege-systems/open-gerege-nexus/backend/pkg/catalog"
 	"github.com/gerege-systems/open-gerege-nexus/backend/pkg/nexus"
 
-	"github.com/gerege-systems/commerce-gerege-nexus/modules/billing"
-	"github.com/gerege-systems/commerce-gerege-nexus/modules/contacts"
-	"github.com/gerege-systems/commerce-gerege-nexus/modules/inventory"
-	"github.com/gerege-systems/commerce-gerege-nexus/modules/products"
+	"github.com/gerege-systems/business-gerege-nexus/modules/billing"
+	"github.com/gerege-systems/business-gerege-nexus/modules/contacts"
+	"github.com/gerege-systems/business-gerege-nexus/modules/inventory"
+	"github.com/gerege-systems/business-gerege-nexus/modules/products"
 )
 
 // The bundled catalogue has to agree with the binary it ships inside.
