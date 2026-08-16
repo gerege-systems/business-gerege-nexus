@@ -1,6 +1,6 @@
 /*
  * Gerege Nexus
- * Copyright (c) 2026 Gerege Systems Development Team, @craftzbay, Gemini AI & Claude AI
+ * Copyright (c) 2026 Gerege Systems Development Team, Gerege Nomadica Foundation
  * Distributed under the Apache 2.0 License.
  *
  * Package billing implements Public Billing & e-Barimt tax receipt Go module (io.gerege.nexus.billing).
