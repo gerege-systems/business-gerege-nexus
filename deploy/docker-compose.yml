@@ -99,6 +99,12 @@ services:
       # unlike the App Store, which inherited nexus.gerege.mn's clients.
       SSO_DEFAULT_CLIENT_SECRET: ${SSO_DEFAULT_CLIENT_SECRET:?SSO_DEFAULT_CLIENT_SECRET is required}
 
+      # What this deployment calls itself. The browser app is given the same
+      # name and four more; these two are halves of one setting, and a stack
+      # that renames only one of them has a sign-in screen and an eID prompt
+      # disagreeing about which product somebody is standing in front of.
+      BRAND_NAME: ${BRAND_NAME:-}
+
       # No demo data in production. The seeded account has a published password.
       SEED_DEMO_DATA: "false"
       DEMO_MODE: "false"
